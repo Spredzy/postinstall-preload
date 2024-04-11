@@ -1,0 +1,82 @@
+---
+# Projects
+#
+controller_projects:
+  - name: Pre Loader Job Templates
+    organization: Default
+    scm_branch: main
+    scm_clean: 'no'
+    scm_delete_on_update: 'no'
+    scm_type: git
+    scm_update_on_launch: 'no'
+    scm_url: https://github.com/Spredzy/seedseed.git
+
+# Inventories
+#
+controller_inventories:
+  - name: Loopback
+    organization: Default
+
+controller_hosts:
+  - name: localhost
+    inventory: Loopback
+    variables:
+      ansible_connection: local
+
+# Credentials
+#
+controller_credentials:
+ - name: Loopback Creds
+   organization: Default
+   credential_type: Red Hat Ansible Automation Platform
+   inputs:
+     username: '{{ lookup("ansible.builtin.env", "CONTROLLER_USERNAME") }}'
+     password: '{{ lookup("ansible.builtin.env", "CONTROLLER_PASSWORD") }}'
+     host: '{{ lookup("ansible.builtin.env", "CONTROLLER_HOST") }}'
+     verify_ssl: false
+   controller_configuration_credentials_secure_logging: false
+
+# Execution Environments
+# (TODO): Only needed until infra.controller_configuration makes it in to controle plane EE
+#
+controller_execution_environments:
+  - name: "seed_ee"
+    image: ghcr.io/spredzy/my-own-ee:0.0.3
+
+
+# Job Templates
+#
+controller_templates:
+  - name: Seed Custom Experiences
+    instance_groups:
+      - default
+    inventory: Loopback
+    execution_environment: seed_ee # To be removed once infra.controller_configuration makes it to control plane EE
+    project: Pre Loader Job Templates
+    playbook: seed_custom_content.yml
+    survey_enabled: true
+    survey: "{{ lookup('template', 'surveys/seed_custom_experience_survey.json') | regex_replace('\\n', '') }}"
+    credentials:
+      - Loopback Creds
+  - name: Seed Partner Experiences
+    instance_groups:
+      - default
+    inventory: Loopback
+    execution_environment: seed_ee # To be removed once infra.controller_configuration makes it to control plane EE
+    project: Pre Loader Job Templates
+    playbook: seed_partner_content.yml
+    survey_enabled: true
+    survey: "{{ lookup('template', 'surveys/seed_partner_experiences_survey.json') | regex_replace('\\n', '') }}"
+    credentials:
+      - Loopback Creds
+  - name: Seed Red Hat Experiences
+    instance_groups:
+      - default
+    inventory: Loopback
+    execution_environment: seed_ee # To be removed once infra.controller_configuration makes it to control plane EE
+    project: Pre Loader Job Templates
+    playbook: seed_redhat_content.yml
+    survey_enabled: true
+    survey: "{{ lookup('template', 'surveys/seed_redhat_experiences_survey.json') | regex_replace('\\n', '') }}"
+    credentials:
+      - Loopback Creds

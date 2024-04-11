@@ -1,0 +1,33 @@
+{
+    "name": "Seed Partner Experiences Survey",
+    "description": "Seed Partner Experiences Survey",
+    "spec": [
+      {
+        "question_description": "Partner Experiences to seed in",
+        "min": 0,
+        "default": "",
+        "max": 128,
+        "required": true,
+        "choices": [
+	  "F5",
+	  "Dell"
+	],
+        "new_question": true,
+        "variable": "seed_partners",
+        "question_name": "Partner Experiences to seed in",
+        "type": "multiselect"
+      },
+      {
+        "question_description": "Disconnected Environment - Git mirror of Red Hat Partner Experiences",
+        "min": 0,
+        "default": "",
+        "max": 128,
+        "required": false,
+        "choices": "",
+        "new_question": true,
+        "variable": "disconnected_environment_url",
+        "question_name": "Disconnected Environment - Git mirror of Red Hat Partner Experiences",
+        "type": "text"
+      }
+    ]
+  }

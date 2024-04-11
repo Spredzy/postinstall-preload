@@ -1,0 +1,18 @@
+{
+    "name": "Seed Custom Experience Survey",
+    "description": "Seed Custom Experience Survey",
+    "spec": [
+      {
+        "question_description": "Git repository of the Experience to be seeded",
+        "min": 0,
+        "default": "",
+        "max": 128,
+        "required": true,
+        "choices": "",
+        "new_question": true,
+        "variable": "seed_custom_cac_url",
+        "question_name": "Git repository of the Experience to be seeded",
+        "type": "text"
+      }
+    ]
+  }
